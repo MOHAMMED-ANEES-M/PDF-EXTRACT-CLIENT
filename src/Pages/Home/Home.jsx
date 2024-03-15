@@ -1,35 +1,62 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { errorToast, successToast, warnToast } from '../../components/Toast';
+import { fetchPdf, setTokenHeader, uploadPdf } from '../../Services/api';
 
 const Home = () => {
   const [file, setFile] = useState(null);
+  const [pdf, setPdf] = useState(null);
   const [uploadStatus, setUploadStatus] = useState(null);
+
+  const token = localStorage.getItem('token')
+  const userId = localStorage.getItem('userId')
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+    console.log('setfile',e.target.files[0]);
   };
 
   const handleSubmit = async () => {
     if (!file) {
-      alert('Please select a file to upload.');
+      warnToast('Please select a file to upload.');
       return;
     }
+    console.log('file',file);
 
     const formData = new FormData();
-    formData.append('pdf', file);
-
+    formData.append('file', file, file.name);
+    formData.append('userId', userId);
+    
     try {
-      const response = await axios.post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      setUploadStatus(response.data.message);
-    } catch (error) {
-      console.error('Error uploading PDF:', error);
-      setUploadStatus('An error occurred while uploading the PDF.');
+      console.log('formData',formData);
+      setTokenHeader(token)
+      const response = await uploadPdf(formData);
+      console.log('pdfUpload res:', response);
+      if (response.success) { 
+        // successToast(response.message)
+        setUploadStatus('Loading...');
+      }
+    } catch (err) {
+      // console.log(err);
+      errorToast(err && err.response && err.response.data.message)
     }
   };
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        setTokenHeader(token); 
+        const pdf = await fetchPdf();
+        if (pdf.success) { 
+          console.log('pdf:', pdf);
+          setPdf(pdf.fetchedPdf)
+        }
+      } catch (err) {
+        errorToast(err && err.response && err.response.data.message)
+        console.error('Error fetching data:', err);
+      }
+    };
+    fetchData()
+  },[])
 
   return (
     <div className="container mx-auto mt-10">
@@ -41,6 +68,7 @@ const Home = () => {
           onChange={handleFileChange}
           className="hidden"
           id="pdf-upload"
+          required
         />
         <label
           htmlFor="pdf-upload"

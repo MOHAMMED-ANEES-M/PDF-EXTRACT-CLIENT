@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { errorToast } from '../components/Toast';
 
 const BASE_URL = 'http://localhost:5000';
 
@@ -18,12 +19,12 @@ const setTokenHeader = (token) => {
   }
 };
 
-const fetchPosts = async () => {
+const fetchPdf = async () => {
   try {
-    const response = await axiosInstance.get('/posts');
+    const response = await axiosInstance.get('/api/pdf/');
     return response.data;
   } catch (error) {
-    console.error('Error fetching posts:', error);
+    console.error('Error fetching pdf:', error);
     throw error;
   }
 };
@@ -44,6 +45,20 @@ const loginUser = async (data) => {
       return response.data;
     } catch (error) {
       console.error('Error creating post:', error);
+      throw error;
+    }
+  };
+
+  const uploadPdf = async (formData) => {
+    try {
+      const response = await axiosInstance.post('/api/pdf/upload', formData,  {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error uploading pdf:', error);
       throw error;
     }
   };
@@ -70,9 +85,10 @@ const deletePost = async (postId) => {
 
 export {
   setTokenHeader,
-  fetchPosts,
+  fetchPdf,
   registerUser,
   loginUser,
+  uploadPdf,
   updatePost,
   deletePost
 };

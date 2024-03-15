@@ -25,7 +25,7 @@ const SignIn = () => {
           successToast(`Welcome ${response.user.fname}`)
           localStorage.setItem('userId', response.user._id)
           localStorage.setItem('token', response.token)
-          navigate('/home')
+          navigate('/')
         }
         
     } catch (err) {

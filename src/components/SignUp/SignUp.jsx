@@ -30,9 +30,8 @@ const SingnUp = () => {
       }
       
     }catch(err){
-      console.log(err);
+      // console.log(err);
       errorToast(err && err.response && err.response.data.message)
-
     }
 
   };
