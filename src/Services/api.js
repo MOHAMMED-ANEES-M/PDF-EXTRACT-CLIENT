@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { errorToast } from '../components/Toast';
 
 const BASE_URL = 'http://localhost:5000';
 
@@ -89,6 +88,7 @@ export {
   registerUser,
   loginUser,
   uploadPdf,
+  BASE_URL,
   updatePost,
   deletePost
 };
