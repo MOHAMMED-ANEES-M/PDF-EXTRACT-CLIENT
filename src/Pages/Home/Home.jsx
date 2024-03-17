@@ -80,7 +80,7 @@ const Home = () => {
       </button>
       </div>
 
-      <PdfViewer pdfUploaded={pdfUploaded} refresh={refresh} />
+        <PdfViewer pdfUploaded={pdfUploaded} refresh={refresh} />
 
     </div>
   );

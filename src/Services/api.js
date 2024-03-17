@@ -62,6 +62,16 @@ const loginUser = async (data) => {
     }
   };
 
+  const extractPdf = async (data) => {
+    try {
+      const response = await axiosInstance.post('/api/pdf/extract', data);
+      return response;
+    } catch (error) {
+      console.error('Error extracting pdf:', error);
+      throw error;
+    }
+  }
+
 const updatePost = async (postId, updatedData) => {
   try {
     const response = await axiosInstance.put(`/posts/${postId}`, updatedData);
@@ -83,12 +93,13 @@ const deletePost = async (postId) => {
 };
 
 export {
+  BASE_URL,
   setTokenHeader,
   fetchPdf,
   registerUser,
   loginUser,
   uploadPdf,
-  BASE_URL,
+  extractPdf,
   updatePost,
   deletePost
 };
