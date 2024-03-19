@@ -53,8 +53,8 @@ const Home = () => {
 
   return (
     <div className="container mx-auto mt-10">
-      <h1 className="text-3xl font-bold text-black text-center mb-10">Upload PDF Document</h1>
-      <div className="flex items-center justify-center border-2 p-10 w-[50%] m-auto border-black">
+      <h1 className="text-3xl font-bold text-black text-center mb-10">Extract PDF Pages</h1>
+      <div className="text-center border-2 p-10 w-[50%] m-auto border-black">
         <input
           type="file"
           accept="application/pdf"
@@ -69,7 +69,7 @@ const Home = () => {
         >
           Select PDF
         </label>
-        {file && <p className="ml-3">{file.name}</p>}
+        {file && <p className="mt-3">{file.name}</p>}
       </div>
       <div className='w-fit m-auto'>
       <button
@@ -80,7 +80,7 @@ const Home = () => {
       </button>
       </div>
 
-        <PdfViewer pdfUploaded={pdfUploaded} refresh={refresh} />
+        <PdfViewer pdfUploaded={pdfUploaded} refresh={refresh} setPdfUploaded={setPdfUploaded} file={file} />
 
     </div>
   );

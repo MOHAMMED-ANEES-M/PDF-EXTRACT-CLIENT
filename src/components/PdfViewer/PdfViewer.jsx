@@ -8,7 +8,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
   import.meta.url,
 ).toString();
-const PdfViewer = ({ pdfUploaded, refresh }) => {
+const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
 
     const [pdf, setPdf] = useState('');
     const [extractedPdf, setExtractedPdf] = useState('');
@@ -60,21 +60,25 @@ const PdfViewer = ({ pdfUploaded, refresh }) => {
         setTokenHeader(token)
         const response = await extractPdf(data);
         console.log('pdfExtract res:', response);
-        if (response.data && typeof response.data === 'object') {
-          // Convert the response data into a string
-          const blob = new Blob([response.data], { type: 'application/pdf' });
-          // Create a URL for the extracted PDF blob
-          const url = URL.createObjectURL(blob);
-          // Open the PDF in a new window
-          window.open(url, '_blank');
-      } else {
-          // Handle the case where the response does not contain valid data
-          errorToast('Failed to extract PDF');
-      }
+        const url = URL.createObjectURL(response.data);
+        setExtractedPdf(url)
+        setPdfUploaded(false)
+        // window.open(url, '_blank');
+
       } catch (err) {
         errorToast(err && err.response && err.response.data.message)
       }
     }
+
+    const handleDownloadExtractedPdf = () => {
+      const a = document.createElement('a');
+      a.href = extractedPdf;
+      a.download = file.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setExtractedPdf('')
+    };
 
     useEffect(()=>{
         const fetchData = async () => {
@@ -103,10 +107,10 @@ const PdfViewer = ({ pdfUploaded, refresh }) => {
 
   return (
     <div className='mt-20'>
-        {pdfUploaded && 
+        {pdfUploaded &&
         <>
           <h1 className='text-black text-lg text-center mb-5 font-semibold'>Select pages to extract</h1>
-            <Document className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 m-auto gap-5 w-fit' file={PdfURL} onLoadSuccess={onDocumentLoadSuccess}>
+            <Document className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center m-auto gap-5 w-fit' file={PdfURL} onLoadSuccess={onDocumentLoadSuccess}>
             {Array.from(new Array(numPages), (el, index) => {
               const pageNumber = index + 1;
               return (
@@ -131,21 +135,17 @@ const PdfViewer = ({ pdfUploaded, refresh }) => {
             </Document>
 
             <div className='w-fit m-auto mt-5 '  ref={extractBtnRef}>
-                <button className='bg-green-500 font-bold p-3 text-white' onClick={handleExtractPdf}>Extract PDF</button>
+                <button className='bg-green-500 font-bold p-3 text-white' onClick={handleExtractPdf}>Extract Pages</button>
             </div>
         </>
         }
 
-<div>
 {extractedPdf && (
-                    <Document
-                        file={{ data: extractedPdf }} // Ensure `extractedPdf` is correctly set with the extracted PDF data
-                        onLoadSuccess={onDocumentLoadSuccess}
-                    >
-                        {/* Render pages here */}
-                    </Document>
-                )}
-    </div>
+        <div className='w-fit m-auto mt-5 text-center'>
+          <button className='bg-blue-500 font-bold p-3 text-white' onClick={handleDownloadExtractedPdf}>Download</button>
+          <p className='text-sm text-black mt-3'>Pdf Extracted Successfully</p>
+        </div>
+      )}
 
     </div>
   )

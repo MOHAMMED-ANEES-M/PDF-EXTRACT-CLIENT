@@ -64,7 +64,10 @@ const loginUser = async (data) => {
 
   const extractPdf = async (data) => {
     try {
-      const response = await axiosInstance.post('/api/pdf/extract', data);
+      const response = await axiosInstance.post('/api/pdf/extract', data,{
+        // body: JSON.stringify(data),
+        responseType: 'blob',
+      });
       return response;
     } catch (error) {
       console.error('Error extracting pdf:', error);
