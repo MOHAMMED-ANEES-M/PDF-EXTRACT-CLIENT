@@ -53,8 +53,9 @@ const Home = () => {
 
   return (
     <div className="container mx-auto mt-10">
-      <h1 className="text-3xl font-bold text-black text-center mb-10">Extract PDF Pages</h1>
-      <div className="text-center border-2 p-10 w-[50%] m-auto border-black">
+      <h1 className="text-3xl sm:text-4xl font-bold text-black text-center mb-20 mt-10">Extract PDF Pages</h1>
+      <p className='text-center mb-10 text-lg font-semibold'>Select pdf file to extract pages</p>
+      <div className="text-center  m-auto ">
         <input
           type="file"
           accept="application/pdf"
@@ -65,16 +66,17 @@ const Home = () => {
         />
         <label
           htmlFor="pdf-upload"
-          className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="cursor-pointer bg-[rgb(119,2,7)] text-white font-bold py-3 sm:py-7 px-5 sm:px-20 text-xl  focus:outline-none focus:shadow-outline"
         >
           Select PDF
         </label>
-        {file && <p className="mt-3">{file.name}</p>}
+        {file && <p className="mt-10">{file.name}</p>}
       </div>
       <div className='w-fit m-auto'>
       <button
         onClick={handleSubmit}
-        className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="mt-16 bg-[whitesmoke] border border-black hover:bg-[rgb(119,2,7)] hover:text-white  font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
+        style={{transition: 'background-color 0.3s ease-in'}}
       >
         Upload
       </button>

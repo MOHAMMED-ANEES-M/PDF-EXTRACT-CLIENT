@@ -1,5 +1,5 @@
 .signup {
-    background-color: rgb(60,109,121);
+    background-color: rgb(119,2,7);
 }
 h1 {
     color: rgb(255, 255, 255);
@@ -7,8 +7,8 @@ h1 {
 form input {
     margin-bottom: 15px;
     padding: 15px;
-    background-color: rgb(60,109,121) !important;
-    border: 1px solid rgb(249,174,101);
+    background-color: rgb(119,2,7) !important;
+    border: 1px solid whitesmoke;
     color: white;
 }
 input:focus {
@@ -19,11 +19,15 @@ input:focus {
     transition: background-color 0.3s ease-in
 }
 .signup1-btn:hover {
-    background-color: rgb(249,174,101) !important;
+    background-color: whitesmoke !important;
+    color: black;
 }
 .signup span {
-    color: rgb(249,174,101);
+    color: white;
 }
 .signup span:hover {
     font-style: italic;
+}
+::placeholder{
+    color: white !important;
 }

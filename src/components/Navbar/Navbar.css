@@ -1,24 +1,25 @@
 .nav-div {
-    background-color: rgb(60,109,121);
+    background-color: rgb(119,2,7);
 }
 .signup-btn{
-    background-color: rgb(249,174,101);
+    background-color: whitesmoke;
     transition: background-color 0.3s ease-in;
 }
 .signup-btn:hover{
-    background-color: rgb(255, 123, 0) !important;
+    background-color: white !important;
 }
 .signin-btn{
-    border: 1px solid rgb(249,174,101);
+    border: 1px solid whitesmoke;
     transition: background-color 0.3s ease-in;
 }
 .signin-btn:hover {
-    background-color: rgb(249,174,101);
+    background-color: white;
+    color: black;
 }
 .signout-btn{
-    background-color: rgb(255, 123, 0);
+    background-color: whitesmoke;
     transition: background-color 0.3s ease-in;
 }
 .signout-btn:hover{
-    background-color: rgb(226, 54, 23) !important;
+    background-color: white !important;
 }

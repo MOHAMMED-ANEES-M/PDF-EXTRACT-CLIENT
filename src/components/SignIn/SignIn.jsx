@@ -49,15 +49,15 @@ const SignIn = () => {
   return (
     <div>
       
-      <div className='signup w-1/3 m-auto text-center text-white mt-20  p-10 '>
+      <div className='signup w-4/5 sm:w-3/5 md:w-3/6 lg:w-1/3 m-auto text-center text-white mt-20 p-3 sm:p-10 '>
         <h1 className='text-4xl mb-16'>Sign In</h1>
         <form className='text-center' onSubmit={handleSubmit}>
             <input className='w-4/5' type="text" name='username' placeholder='Enter your username...' onChange={handleChange}/><br />
             <input className='w-4/5' type="password" name='password' placeholder='Enter your password...' onChange={handleChange}/><br />
-            <input className='signup1-btn w-2/6 mt-5 mb-10' type="submit" value="Sign In" />
+            <input className='signup1-btn w-3/6 sm:w-2/6 mt-5 mb-10' type="submit" value="Sign In" />
         </form>
         <p>Don't have an account?  
-          <Link to='/'><span className='ms-1 cursor-pointer'>Sign Up</span></Link>
+          <Link to='/signup'><span className='ms-1 cursor-pointer'>Sign Up</span></Link>
         </p>
       </div>
 

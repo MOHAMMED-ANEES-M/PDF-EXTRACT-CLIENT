@@ -35,11 +35,11 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
             </div> */}
             <div className="hidden md:flex space-x-4 text-white">
               { token ? (
-                 <button className='signout-btn p-3 w-24' onClick={handleSignout}>Sign Out</button>
+                 <button className='signout-btn text-black p-3 w-24' onClick={handleSignout}>Sign Out</button>
               ) : (
                 <>
                 <Link to='/login'><button className='signin-btn p-3 w-24'>Sign In</button></Link>
-                <Link to='/'><button className='signup-btn p-3 w-24'>Sign Up</button></Link>
+                <Link to='signup'><button className='signup-btn p-3 text-black w-24'>Sign Up</button></Link>
                 </>
               )} 
             </div>
@@ -71,11 +71,11 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
               Contact
             </a> */}
             { token ? (
-                 <button className='signout-btn p-3 w-24' onClick={handleSignout}>Sign Out</button>
+                 <button className='signout-btn p-3 text-black w-24' onClick={handleSignout}>Sign Out</button>
               ) : (
                 <>
                 <Link to='login'><button className='signin-btn p-3 w-24 mb-5'>Sign In</button></Link><br />
-                <Link to='/'><button className='signup-btn p-3 w-24'>Sign Up</button></Link>
+                <Link to='signup'><button className='signup-btn p-3 text-black w-24'>Sign Up</button></Link>
                 </>
               )}
           </div>

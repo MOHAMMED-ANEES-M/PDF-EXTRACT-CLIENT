@@ -9,7 +9,7 @@ export const  successToast = (message)=>{
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
         transition: Slide,
         });
 }
@@ -23,7 +23,7 @@ export const  errorToast = (message)=>{
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
         transition: Bounce,
         });
 }
@@ -37,7 +37,7 @@ export const  warnToast = (message)=>{
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
         transition: Flip,
         });
 }
@@ -51,7 +51,7 @@ export const  infoToast = (message)=>{
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
         transition: Zoom,
         });
 }

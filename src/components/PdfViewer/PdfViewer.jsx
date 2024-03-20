@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
 import { BASE_URL, extractPdf, fetchPdf, setTokenHeader } from '../../Services/api';
-import { errorToast } from '../Toast';
+import { errorToast, successToast, warnToast } from '../Toast';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
@@ -54,6 +54,9 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
 
     const handleExtractPdf = async () => {
       try {
+        if (!selectedPages || selectedPages.length<1) {
+          return warnToast('At least select a page to extract pdf')
+        }
         let pages = selectedPages.sort()
         console.log('selectedPages',pages);
         const data = { pdfFilePath: pdf.pdf, pages }
@@ -63,8 +66,8 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
         const url = URL.createObjectURL(response.data);
         setExtractedPdf(url)
         setPdfUploaded(false)
+        successToast('Pdf extracted successfully')
         // window.open(url, '_blank');
-
       } catch (err) {
         errorToast(err && err.response && err.response.data.message)
       }
@@ -77,7 +80,6 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      setExtractedPdf('')
     };
 
     useEffect(()=>{
@@ -94,15 +96,20 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
             console.error('Error fetching data:', err);
           }
         };
-        fetchData()
+        if (token) {
+          fetchData()
+        }
         setSelectedPages('')
+        if (pdfUploaded) {
+          setExtractedPdf('')
+        }
       },[refresh])
 
-      useEffect(() => {
         if (pdfUploaded && extractBtnRef.current) {
-          extractBtnRef.current.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            extractBtnRef.current.scrollIntoView({ behavior: 'smooth' });
+          }, 500);
         }
-      }, [pdfUploaded]);
 
 
   return (
@@ -134,16 +141,17 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
             })}
             </Document>
 
-            <div className='w-fit m-auto mt-5 '  ref={extractBtnRef}>
-                <button className='bg-green-500 font-bold p-3 text-white' onClick={handleExtractPdf}>Extract Pages</button>
+            <div className='w-fit m-auto mt-5 ' >
+                <button className='bg-[rgb(119,2,7)] font-bold p-3 text-white mb-20' onClick={handleExtractPdf}>Extract Pages</button>
             </div>
+            <div className='mt-10' ref={extractBtnRef}></div>
         </>
         }
 
 {extractedPdf && (
         <div className='w-fit m-auto mt-5 text-center'>
-          <button className='bg-blue-500 font-bold p-3 text-white' onClick={handleDownloadExtractedPdf}>Download</button>
-          <p className='text-sm text-black mt-3'>Pdf Extracted Successfully</p>
+          <button className='bg-[rgb(119,2,7)] font-bold p-3 text-white' onClick={handleDownloadExtractedPdf}>Download</button>
+          <p className='text-sm text-black mt-3 mb-10'>Click here to download extracted pdf</p>
         </div>
       )}
 
