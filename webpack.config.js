@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './src/components/pdfViewer/pdfViewer.jsx',
+  entry: './src/components/PdfViewer/PdfViewer.jsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
