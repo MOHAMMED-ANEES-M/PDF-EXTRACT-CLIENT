@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Document, Page } from 'react-pdf';
-import { pdfjs } from 'react-pdf';
+import { Document, Page, pdfjs } from 'react-pdf';
 import { BASE_URL, extractPdf, fetchPdf, setTokenHeader } from '../../Services/api';
 import { errorToast, successToast, warnToast } from '../Toast';
 
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
 
 
 const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
