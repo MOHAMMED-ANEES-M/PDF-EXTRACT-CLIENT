@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { errorToast, successToast, warnToast } from '../../components/Toast';
-import { BASE_URL, fetchPdf, setTokenHeader, uploadPdf } from '../../Services/api';
-import { Document, Page } from '@react-pdf/renderer';
+import React, { useState } from 'react';
+import { errorToast, warnToast } from '../../components/Toast';
+import { setTokenHeader, uploadPdf } from '../../Services/api';
 import PdfViewer from '../../components/PdfViewer/PdfViewer';
 
 const Home = () => {
@@ -19,7 +18,7 @@ const Home = () => {
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
-    console.log('setfile',e.target.files[0]);
+    // console.log('setfile',e.target.files[0]);
   };
 
   const handleSubmit = async () => {
@@ -27,12 +26,9 @@ const Home = () => {
       warnToast('Please select a file to upload.');
       return;
     }
-    console.log('file',file);
-
     const formData = new FormData();
     formData.append('file', file, file.name);
     formData.append('userId', userId);
-    
     try {
       console.log('formData',formData);
       setTokenHeader(token)
@@ -55,6 +51,7 @@ const Home = () => {
     <div className="container mx-auto mt-10">
       <h1 className="text-3xl sm:text-4xl font-bold text-black text-center mb-20 mt-10">Extract PDF Pages</h1>
       <p className='text-center mb-10 text-lg font-semibold'>Select pdf file to extract pages</p>
+
       <div className="text-center  m-auto ">
         <input
           type="file"
@@ -72,6 +69,7 @@ const Home = () => {
         </label>
         {file && <p className="mt-10">{file.name}</p>}
       </div>
+
       <div className='w-fit m-auto'>
       <button
         onClick={handleSubmit}
@@ -82,10 +80,11 @@ const Home = () => {
       </button>
       </div>
 
-        <PdfViewer pdfUploaded={pdfUploaded} refresh={refresh} setPdfUploaded={setPdfUploaded} file={file} />
+      <PdfViewer pdfUploaded={pdfUploaded} refresh={refresh} setPdfUploaded={setPdfUploaded} file={file} />
 
     </div>
   );
 };
+
 
 export default Home;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'https://pdf-extract-server.onrender.com';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -75,25 +75,6 @@ const loginUser = async (data) => {
     }
   }
 
-const updatePost = async (postId, updatedData) => {
-  try {
-    const response = await axiosInstance.put(`/posts/${postId}`, updatedData);
-    return response.data;
-  } catch (error) {
-    console.error('Error updating post:', error);
-    throw error;
-  }
-};
-
-const deletePost = async (postId) => {
-  try {
-    const response = await axiosInstance.delete(`/posts/${postId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error deleting post:', error);
-    throw error;
-  }
-};
 
 export {
   BASE_URL,
@@ -103,6 +84,4 @@ export {
   loginUser,
   uploadPdf,
   extractPdf,
-  updatePost,
-  deletePost
 };
