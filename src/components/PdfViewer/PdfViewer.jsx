@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Document, Page } from 'react-pdf';
-import { Document, Page, pdfjs } from 'react-pdf';
+import { pdfjs } from 'react-pdf';
 import { BASE_URL, extractPdf, fetchPdf, setTokenHeader } from '../../Services/api';
 import { errorToast, successToast, warnToast } from '../Toast';
 
