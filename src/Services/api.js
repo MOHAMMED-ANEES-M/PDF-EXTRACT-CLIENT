@@ -10,6 +10,7 @@ const axiosInstance = axios.create({
   },
 });
 
+// Function to set token header for authentication
 const setTokenHeader = (token) => {
   if (token) {
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -18,6 +19,7 @@ const setTokenHeader = (token) => {
   }
 };
 
+// Function to fetch PDF data from the server
 const fetchPdf = async () => {
   try {
     const response = await axiosInstance.get('/api/pdf/');
@@ -28,6 +30,7 @@ const fetchPdf = async () => {
   }
 };
 
+// Function to register a new user
 const registerUser = async (data) => {
   try {
     const response = await axiosInstance.post('/api/users/register', data);
@@ -38,6 +41,7 @@ const registerUser = async (data) => {
   }
 };
 
+// Function to log in an existing user
 const loginUser = async (data) => {
     try {
       const response = await axiosInstance.post('/api/users/login', data);
@@ -48,6 +52,7 @@ const loginUser = async (data) => {
     }
   };
 
+  // Function to upload a PDF file to the server
   const uploadPdf = async (formData) => {
     try {
       const response = await axiosInstance.post('/api/pdf/upload', formData,  {
@@ -62,6 +67,7 @@ const loginUser = async (data) => {
     }
   };
 
+  // Function to extract pages from a PDF file
   const extractPdf = async (data) => {
     try {
       const response = await axiosInstance.post('/api/pdf/extract', data,{

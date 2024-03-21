@@ -30,6 +30,7 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
     setPageNumber(1);
   }
 
+  // Function to toggle selection of a page for extraction
   const togglePageSelection = (page) => {
     if (selectedPages.includes(page)) {
       setSelectedPages(selectedPages.filter((p) => p !== page));
@@ -38,6 +39,7 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
     }
   };
 
+  // Array to hold JSX elements for each page of the PDF
   const pages = [];
   if (numPages !== null) { 
       for (let i = 1; i <= numPages; i++) {
@@ -107,6 +109,7 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
     }
   },[refresh])
 
+  // Scroll to the extract button when the PDF is uploaded
   if (pdfUploaded && extractBtnRef.current) {
     setTimeout(() => {
       extractBtnRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -116,6 +119,7 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
 
   return (
     <div className='mt-20'>
+      {/* Display only if PDF is uploaded */}
       {pdfUploaded &&
         <>
           <h1 className='text-black text-lg text-center mb-5 font-semibold'>Select pages to extract</h1>
@@ -146,10 +150,13 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
           <div className='w-fit m-auto mt-5 ' >
               <button className='bg-[rgb(119,2,7)] font-bold p-3 text-white mb-20' onClick={handleExtractPdf}>Extract Pages</button>
           </div>
+          
+          {/* Reference for scrolling to the button */}
           <div className='mt-10' ref={extractBtnRef}></div>
         </>
       }
 
+      {/* Display only if PDF is extracted */}
       {extractedPdf && (
         <div className='w-fit m-auto mt-5 text-center'>
           <button className='bg-[rgb(119,2,7)] font-bold p-3 text-white' onClick={handleDownloadExtractedPdf}>Download</button>
