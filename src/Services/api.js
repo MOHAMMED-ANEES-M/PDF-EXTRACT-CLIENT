@@ -4,7 +4,6 @@ const BASE_URL = 'https://pdf-extract-server.onrender.com';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 5000, 
   headers: {
     'Content-Type': 'application/json',
   },
