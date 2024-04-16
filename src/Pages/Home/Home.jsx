@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { errorToast, warnToast } from '../../components/Toast';
 import { setTokenHeader, uploadPdf } from '../../Services/api';
 import PdfViewer from '../../components/PdfViewer/PdfViewer';
+import Loader from '../../components/Loader/Loader';
 
 const Home = () => {
   const [file, setFile] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [pdfUploaded, setPdfUploaded] = useState(false);
   const [numPages, setNumPages] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
@@ -22,6 +24,9 @@ const Home = () => {
   };
 
   const handleSubmit = async () => {
+    if (!token) {
+      return warnToast('Please sign in to extract pdf')
+    }
     if (!file) {
       warnToast('Please select a file to upload.');
       return;
@@ -30,6 +35,7 @@ const Home = () => {
     formData.append('file', file, file.name);
     formData.append('userId', userId);
     try {
+      setLoading(true)
       console.log('formData',formData);
       setTokenHeader(token)
       const response = await uploadPdf(formData);
@@ -41,6 +47,8 @@ const Home = () => {
     } catch (err) {
       // console.log(err);
       errorToast(err && err.response && err.response.data.message)
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -48,7 +56,11 @@ const Home = () => {
   
 
   return (
-    <div className="container mx-auto mt-10">
+    <>
+    {loading && <Loader />}
+
+    <div className={`container mx-auto mt-10 ${loading ? 'opacity-25' : ''}`}>
+
       <h1 className="text-3xl sm:text-4xl font-bold text-black text-center mb-20 mt-10">Extract PDF Pages</h1>
       <p className='text-center mb-10 text-lg font-semibold'>Select pdf file to extract pages</p>
 
@@ -83,6 +95,7 @@ const Home = () => {
       <PdfViewer pdfUploaded={pdfUploaded} refresh={refresh} setPdfUploaded={setPdfUploaded} file={file} />
 
     </div>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'react-pdf';
 import { BASE_URL, extractPdf, fetchPdf, setTokenHeader } from '../../Services/api';
 import { errorToast, successToast, warnToast } from '../Toast';
+import Loader from '../Loader/Loader';
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -16,6 +17,7 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [selectedPages, setSelectedPages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const extractBtnRef = useRef(null);
 
@@ -60,6 +62,7 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
       if (!selectedPages || selectedPages.length<1) {
         return warnToast('At least select a page to extract pdf')
       }
+      setLoading(true)
       let pages = selectedPages.sort()
       console.log('selectedPages',pages);
       const data = { pdfFilePath: pdf.pdf, pages }
@@ -72,6 +75,8 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
       successToast('Pdf extracted successfully')
     } catch (err) {
       errorToast(err && err.response && err.response.data.message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -116,7 +121,10 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
 
 
   return (
-    <div className='mt-20'>
+    <>
+    {loading && <Loader />}
+
+    <div className={`mt-20 ${loading ? 'opacity-25' : ''}`}>
       {/* Display only if PDF is uploaded */}
       {pdfUploaded &&
         <>
@@ -163,6 +171,7 @@ const PdfViewer = ({ pdfUploaded, refresh, setPdfUploaded, file }) => {
       )}
 
     </div>
+    </>
   )
 }
 

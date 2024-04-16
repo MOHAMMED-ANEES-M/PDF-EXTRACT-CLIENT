@@ -3,12 +3,14 @@ import './SignUp.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { errorToast, successToast } from '../Toast/index';
 import { registerUser } from '../../Services/api';
+import Loader from '../Loader/Loader';
 
 
 const SingnUp = () => {
 
   const [data,setData] = useState('')
   const [userId,setUserId] = useState('')
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate()
 
@@ -21,17 +23,18 @@ const SingnUp = () => {
   const handleSubmit=async(e)=>{
     e.preventDefault();
     try{
-
+      setLoading(true)
       const response = await registerUser(data);
       console.log('User registered: ',response);
       if (response.success) {
         successToast('Registration Successfull')
         navigate('/login')
       }
-      
     }catch(err){
       // console.log(err);
       errorToast(err && err.response && err.response.data.message)
+    } finally {
+      setLoading(false)
     }
 
   };
@@ -51,7 +54,9 @@ const SingnUp = () => {
   return (
     <div>
       
-      <div className='signup w-4/5 sm:w-3/5 md:w-3/6 lg:w-1/3 m-auto mt-3 p-2 sm:p-5 text-center text-white'>
+      {loading &&  <Loader /> }
+
+      <div className={`signup w-4/5 sm:w-3/5 md:w-3/6 lg:w-1/3 m-auto mt-3 p-2 sm:p-5 text-center text-white ${loading ? 'opacity-25' : ''}`}>
         <h1 className='text-4xl mb-10'>Sign Up</h1>
         <form onSubmit={handleSubmit} className='text-center'>
           <input className='w-4/5' type="text" name='fname' placeholder='Enter your firstname...' onChange={handleChange} /><br />
